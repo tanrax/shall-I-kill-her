@@ -7,7 +7,8 @@ local image
 
 function stage1.load(game, camera)
 	image = love.graphics.newImage('assets/sprites/background/bg.jpg')
-	arrows.load(game, camera)
+	arrows.load(game, stage1, camera)
+	game.canvas.x = game.window.width
 end
 
 function stage1.update(dt, game)
