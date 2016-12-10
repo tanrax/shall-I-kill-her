@@ -19,7 +19,9 @@ function game.load()
 
   	-- Collisions
   	--game.collisions = HC.new(150)
-  	--
+  	
+  	-- Bells
+  	bells_enable = false
 end
 
 return game
