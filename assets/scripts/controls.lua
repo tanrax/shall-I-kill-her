@@ -29,12 +29,6 @@ function controls.update(dt, game, camera)
     local cam_x, cam_y = camera.gcam:getPosition()
     local mouse_x, mouse_y = love.mouse.getPosition() 
     controls.mouse:moveTo(cam_x + mouse_x - 640 , mouse_y)
-    print('mouse')
-    print(love.mouse.getPosition())
-    print('camera')
-    print(camera.gcam:getPosition())
-    print('collision')
-    print(mouse_x + 640 - cam_x .. ' ' .. (cam_y * 2) + mouse_y)
 
    	if control_left then
    		if game.canvas.x > game.window.width / 2 then

@@ -79,6 +79,32 @@ function bell.update(dt, game, cam)
     		end
 		end
 	end
+	-- Logic
+	local num_enable = 0
+	for key, bell in pairs(bells) do
+		for key, item in pairs(bell.enable) do
+			-- Count enables
+			num_enable = num_enable + 1
+			-- if key == 1 and item and bell.enable[tools.table_length(bell.enable)] == false then
+			-- end
+		end
+		if num_enable > 1 then
+			-- Search emptys
+			local count_singles = 0
+			for key, item in pairs(bell.enable) do
+				if key > 1 and bell.enable[key] and bell.enable[key - 1] == false then
+					count_singles = count_singles + 1
+				end
+			end
+			if count_singles >= 2 then
+				for key, item in pairs(bell.enable) do
+					bell.enable[key] = false
+				end
+			end
+			count_singles = 0
+		end
+		num_enable = 0
+	end
 end
 
 function bell.draw()
