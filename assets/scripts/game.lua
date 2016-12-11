@@ -1,4 +1,5 @@
 local game = {}
+local gamera = require 'assets/scripts/vendor/gamera'
 
 function game.load()
 	-- Configuration
@@ -31,6 +32,14 @@ end
 
 function game:prevLevel()
 	game.level = game.level - 1
+end
+
+function game:setNewSizeWorld(canvas_width, canvas_height)
+	local width, height = 1280, 720
+	game.window = { width = width , height = height }
+	game.canvas = { x = width / 2, y= 0, width = canvas_width, height = canvas_height }
+	camera.gcam = gamera.new(0, 0, game.window.width, game.window.height)
+	camera.gcam:setWorld(0, 0, game.canvas.width, game.canvas.height)
 end
 
 return game
