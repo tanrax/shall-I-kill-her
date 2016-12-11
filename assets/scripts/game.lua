@@ -9,7 +9,7 @@ function game.load()
 	game.window = { width = width , height = height }
 	game.canvas = { x = width / 2, y= 0, width = canvas_width, height = canvas_height }
 	game.level = 1
-	game.end_level = 2
+	game.end_level = 3
 
 	love.window.setMode(game.window.width, game.window.height)
 
