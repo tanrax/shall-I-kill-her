@@ -4,6 +4,7 @@ local controls = require 'assets/scripts/controls'
 local bells = require 'assets/scripts/bells'
 local camera = require 'assets/scripts/camera'
 local stress = require 'assets/scripts/stress'
+local messages = require 'assets/scripts/messages'
 
 -- LOAD
 function love.load()
@@ -13,6 +14,7 @@ function love.load()
 	stress.load(game, camera)
 	bells.load(game, camera)
 	controls.load(game)
+	messages.load(game)
 end
 
 -- UPDATE
@@ -24,6 +26,7 @@ function love.update(dt)
 	stress.update(dt, game, camera)
 	bells.update(dt, game, camera)
 	controls.update(dt, game, camera)
+	messages.update(dt)
 end
 
 -- DRAW
@@ -36,5 +39,6 @@ function love.draw()
 		end
 	)
 	controls.draw()
+	messages.draw()
 end
 
