@@ -22,9 +22,7 @@ function arrows.draw()
 	if arrows.game.level > 1 then
 		love.graphics.draw(arrows.img_left, arrows.left_x, arrows.left_y)
 	end
-	if arrows.game.level ~= arrows.game.end_level then
 	love.graphics.draw(arrows.img_right, arrows.right_x, arrows.right_y)
-end
 end
 
 
@@ -47,12 +45,7 @@ function love.mousepressed(mx, my, button)
 			end
 			if same_size then
 				-- canvas == world
-
-				print 'x'
 				if mx >= arrows.right_x then
-					print 'y'
-					print(my)
-					print(arrows.right_y)
 					if my >= arrows.left_y and my < arrows.left_y + arrows.img_left:getHeight() then
 						arrows.game:nextLevel()
 					end

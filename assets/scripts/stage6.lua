@@ -6,7 +6,7 @@ local stage6 = {}
 local image
 
 function stage6.load(game, camera)
-	image = love.graphics.newImage('assets/sprites/background/fondo_chimenea.jpg')
+	image = love.graphics.newImage('assets/sprites/background/fondo_armario.jpg')
 	stage6.world = { w = image:getWidth(), h= 720}
 	game:setNewSizeWorld(stage6.world.w, stage6.world.h)
 	arrows.load(game, stage6, camera)

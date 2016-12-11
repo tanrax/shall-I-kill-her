@@ -9,7 +9,7 @@ function game.load()
 	game.window = { width = width , height = height }
 	game.canvas = { x = width / 2, y= 0, width = canvas_width, height = canvas_height }
 	game.level = 1
-	game.end_level = 8
+	game.end_level = 6
 
 	love.window.setMode(game.window.width, game.window.height)
 
@@ -30,7 +30,11 @@ function game.load()
 end
 
 function game:nextLevel()
-	game.level = game.level + 1
+	if game.level == game.end_level then
+		game.level = 1
+	else
+		game.level = game.level + 1
+	end
 end
 
 function game:prevLevel()
