@@ -22,8 +22,11 @@ function game.load()
   	-- Bells
   	bells_enable = true
 
-	game.music = love.audio.newSource("assets/audio/music/theme.mp3")
-	game:playMusic()
+  	game.music = love.audio.newSource("assets/audio/music/theme.mp3")
+  	game:playMusic()
+
+  	game.stress = false
+
 end
 
 function game:nextLevel()
