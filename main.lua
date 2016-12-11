@@ -21,6 +21,7 @@ end
 function love.update(dt)
 	require('assets/scripts/vendor/lovebird').update()
 	game.world:update(dt)
+	game.update(dt)
 	camera.update(game)
 	stages.update(dt, game, camera)
 	stress.update(dt, game, camera)

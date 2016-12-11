@@ -8,11 +8,12 @@ local collisions = {}
 local cam_x, cam_y = nil
 
 function bell.load(game, cam)
-	sound_1 = love.audio.newSource('assets/audio/fx/bill_1.wav', 'static')
+	sound_error = love.audio.newSource('assets/audio/fx/bills/campana_fallo.wav', 'static')
   	body = {
 		img = love.graphics.newImage('assets/sprites/bells/bell_vibrate.png'),
 		num_frames = 10,
 		speed = 0.05,
+		active = false,
 		x = -game.canvas.width,
 		y = -game.canvas.height
   	}
@@ -24,12 +25,18 @@ function bell.load(game, cam)
   	bell_1 = tools.clone_table(body)
   	bell_1.x = cam_x + (game.window.width / 4) - (bell_1.img:getWidth() / body.num_frames / 2)
   	bell_1.y = (game.window.height / 2) - (bell_1.img:getHeight() / 2)
+  	bell_1.sound_loop = love.audio.newSource('assets/audio/fx/bills/campana_loop1.wav', 'static')
+  	bell_1.sound_good = love.audio.newSource('assets/audio/fx/bills/campana_exito1.wav', 'static')
   	bell_2 = tools.clone_table(body)
   	bell_2.x = cam_x + (game.window.width / 4 * 2) - (bell_1.img:getWidth() / body.num_frames / 2)
   	bell_2.y = bell_1.y
+	bell_2.sound_loop = love.audio.newSource('assets/audio/fx/bills/campana_loop2.wav', 'static')
+  	bell_2.sound_good = love.audio.newSource('assets/audio/fx/bills/campana_exito2.wav', 'static')
   	bell_3 = tools.clone_table(body)
   	bell_3.x = cam_x + (game.window.width / 4 * 3) - (bell_1.img:getWidth() / body.num_frames / 2)
   	bell_3.y = bell_1.y
+	bell_3.sound_loop = love.audio.newSource('assets/audio/fx/bills/campana_loop3.wav', 'static')
+  	bell_3.sound_good = love.audio.newSource('assets/audio/fx/bills/campana_exito3.wav', 'static')
   	bells = {bell_1, bell_2, bell_3}	
 
   	-- Collisions
@@ -73,11 +80,16 @@ function bell.update(dt, game, cam)
 		end
 	end
 	-- Check collisions
-	for key, bell in pairs(bells) do
-		for key, collision in pairs(bell.collisions) do
-    		for shape, delta in pairs(HC.collisions(bell.collisions[key])) do
-				bell.enable[key] = true
-    		end
+	if game.bells_enable then
+		for key, bell in pairs(bells) do
+			for key, collision in pairs(bell.collisions) do
+	    		for shape, delta in pairs(HC.collisions(bell.collisions[key])) do
+	    			if bell.sound_loop:isPlaying() == false then
+						bell.sound_loop:play()
+					end
+					bell.enable[key] = true
+	    		end
+			end
 		end
 	end
 	-- Logic
@@ -97,6 +109,10 @@ function bell.update(dt, game, cam)
 			end
 			-- Bad. Restart
 			if count_singles >= 2 then
+				for key, bell in pairs(bells) do
+					bell.sound_loop:stop()
+				end
+				sound_error:play()
 				for key, item in pairs(bell.enable) do
 					bell.enable[key] = false
 				end
@@ -110,9 +126,9 @@ function bell.update(dt, game, cam)
 			end
 			-- Enable animation good
 			if good then
+				bell.active = true
 				bell.animation:resume()
-				sound_1:stop()
-				sound_1:play()
+				bell.sound_good:play()
 				for key, item in pairs(bell.enable) do
 					bell.enable[key] = false
 				end
@@ -122,10 +138,23 @@ function bell.update(dt, game, cam)
 		end
 		num_enable = 0
 	end
+	-- Game over
+	game_over = true
+	for key, bell in pairs(bells) do
+		if not bell.active then
+			game_over = false
+		end
+	end
+	for key, bell in pairs(bells) do
+		if game_over then
+			bell.animation:pauseAtEnd()
+			game.bells_enable = false
+		end
+	end
 end
 
-function bell.draw()
-	if bells_enable then
+function bell.draw(game)
+	if game.bells_enable then
 		-- Bells
 		for key, bell in pairs(bells) do
 			bell.animation:draw(bell.img, bell.x, bell.y)
