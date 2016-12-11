@@ -11,7 +11,7 @@ function love.load()
 	camera.load(game)
 	stages.load(game, camera)
 	stress.load(game, camera)
-	--bells.load(game, camera)
+	bells.load(game, camera)
 	controls.load(game)
 end
 
@@ -22,7 +22,7 @@ function love.update(dt)
 	camera.update(game)
 	stages.update(dt, game, camera)
 	stress.update(dt, game, camera)
-	-- bells.update(dt, game, camera)
+	bells.update(dt, game, camera)
 	controls.update(dt, game, camera)
 end
 
@@ -32,7 +32,7 @@ function love.draw()
 		function(l,t,w,h)
 			stages.draw()
 			stress.draw()
-			-- bells.draw(game)
+			bells.draw(game)
 		end
 	)
 	controls.draw()
