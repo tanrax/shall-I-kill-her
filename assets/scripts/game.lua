@@ -4,7 +4,7 @@ local gamera = require 'assets/scripts/vendor/gamera'
 function game.load()
 	-- Configuration
 	math.randomseed(os.time())
-	local width, height = 1280, 720
+	local width, height = 1279, 720
 	local canvas_width, canvas_height = 2280, 720
 	game.window = { width = width , height = height }
 	game.canvas = { x = width / 2, y= 0, width = canvas_width, height = canvas_height }
