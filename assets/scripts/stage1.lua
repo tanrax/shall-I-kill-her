@@ -6,8 +6,11 @@ local stage1 = {}
 local image
 
 function stage1.load(game, camera)
+	stage1.world = { w = 2560, h= 720}
+	game:setNewSizeWorld(stage1.world.w, stage1.world.h)
 	image = love.graphics.newImage('assets/sprites/background/bg.jpg')
-	arrows.load(game, camera)
+	arrows.load(game, stage1, camera)
+	game.canvas.x = game.window.width
 end
 
 function stage1.update(dt, game)

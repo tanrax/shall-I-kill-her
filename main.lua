@@ -1,14 +1,15 @@
 local game = require 'assets/scripts/game'
-local stage1 = require 'assets/scripts/stage1'
+local stages = require 'assets/scripts/stages'
 local controls = require 'assets/scripts/controls'
 local bells = require 'assets/scripts/bells'
 local camera = require 'assets/scripts/camera'
+
 
 -- LOAD
 function love.load()
 	game.load()
 	camera.load(game)
-	stage1.load(game, camera)
+	stages.load(game, camera)
 	bells.load(game, camera.gcam)
 	controls.load(game)
 end
@@ -16,7 +17,7 @@ end
 -- UPDATE
 function love.update(dt)
 	game.world:update(dt)
-	stage1.update(dt)
+	stages.update(dt, game, camera)
 	camera.update(game)
 	bells.update(dt)
 	controls.update(dt, game)
@@ -26,7 +27,7 @@ end
 function love.draw()
 	camera.gcam:draw(
 		function(l,t,w,h)
-			stage1.draw()
+			stages.draw()
 			bells.draw(game)
 		end
 	)
