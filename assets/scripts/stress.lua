@@ -7,6 +7,7 @@ local image
 
 function stress.load(game, camera)
 	image = love.graphics.newImage('assets/sprites/stress/stress.png')
+
 end
 
 function stress.update(dt, game)
@@ -17,6 +18,7 @@ end
 function stress.draw()
 	if stress.stress == true then
 		cam_x, cam_y = camera.gcam:getVisible()
+		love.graphics.setColor(255, 255, 255, 90)
 		love.graphics.draw(image, cam_x, cam_y)
 	end
 end
