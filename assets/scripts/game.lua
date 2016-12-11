@@ -17,11 +17,8 @@ function game.load()
 	love.physics.setMeter(world_meter) -- Height earth in meters
   	game.world = love.physics.newWorld(0, gravity * world_meter, true) -- Make earth
 
-  	-- Collisions
-  	--game.collisions = HC.new(150)
-  	
   	-- Bells
-  	bells_enable = false
+  	bells_enable = true
 end
 
 return game
