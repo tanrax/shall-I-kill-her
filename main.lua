@@ -10,16 +10,16 @@ function love.load()
 	game.load()
 	camera.load(game)
 	stages.load(game, camera)
-	bells.load(game, camera.gcam)
+	bells.load(game, camera)
 	controls.load(game)
 end
 
 -- UPDATE
 function love.update(dt)
 	game.world:update(dt)
-	stages.update(dt, game, camera)
 	camera.update(game)
-	bells.update(dt)
+	stages.update(dt, game, camera)
+	bells.update(dt, game, camera)
 	controls.update(dt, game)
 end
 
