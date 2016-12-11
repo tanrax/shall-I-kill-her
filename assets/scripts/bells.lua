@@ -46,8 +46,10 @@ function bell.load(game, cam)
 	-- Add collisions
 	for key, bell in pairs(bells) do
 		bell.collisions = {}
+		bell.enable = {}
 		for key, collision in pairs(collisions.positions) do
 			bell.collisions[key] = HC.circle(bell.x + collision.x, collision.y, collisions.size)
+			bell.enable[key] = false
 		end
 	end
 end
@@ -69,6 +71,14 @@ function bell.update(dt, game, cam)
 			bell.collisions[key]:moveTo(collisions.positions[key].x + bell.x + (bell.img:getHeight() / 2) + collisions.correction, collisions.positions[key].y + bell.y + (bell.img:getHeight() / 2))
 		end
 	end
+	-- Check collisions
+	for key, bell in pairs(bells) do
+		for key, collision in pairs(bell.collisions) do
+    		for shape, delta in pairs(HC.collisions(bell.collisions[key])) do
+				bell.enable[key] = true
+    		end
+		end
+	end
 end
 
 function bell.draw()
@@ -81,7 +91,11 @@ function bell.draw()
 		if collision_debug then
 			for key, bell in pairs(bells) do
 				for key, collision in pairs(collisions.positions) do
-					bell.collisions[key]:draw('fill')	
+					if bell.enable[key] then
+						bell.collisions[key]:draw('fill')	
+					else
+						bell.collisions[key]:draw('line')	
+					end
 				end
 			end
 		end

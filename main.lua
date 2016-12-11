@@ -16,11 +16,12 @@ end
 
 -- UPDATE
 function love.update(dt)
+	require('assets/scripts/vendor/lovebird').update()
 	game.world:update(dt)
 	camera.update(game)
 	stages.update(dt, game, camera)
 	bells.update(dt, game, camera)
-	controls.update(dt, game)
+	controls.update(dt, game, camera)
 end
 
 -- DRAW
