@@ -20,7 +20,7 @@ function game.load()
   	game.world = love.physics.newWorld(0, gravity * world_meter, true) -- Make earth
 
   	-- Bells
-  	bells_enable = true
+  	bells_enable = false
 end
 
 function game:nextLevel()

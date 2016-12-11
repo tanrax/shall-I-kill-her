@@ -3,11 +3,12 @@ local tools = require 'assets/scripts/tools'
 local HC = require 'assets/scripts/vendor/HC'
 
 local bell = {}
-local collision_debug = true
+local collision_debug = false
 local collisions = {}
 local cam_x, cam_y = nil
 
 function bell.load(game, cam)
+	sound_1 = love.audio.newSource('assets/audio/fx/bill_1.wav', 'static')
   	body = {
 		img = love.graphics.newImage('assets/sprites/bells/bell_vibrate.png'),
 		num_frames = 10,
@@ -16,7 +17,7 @@ function bell.load(game, cam)
 		y = -game.canvas.height
   	}
 	g = anim8.newGrid(body.img:getWidth() / body.num_frames, body.img:getHeight(), body.img:getWidth(), body.img:getHeight())
-  	body.animation = anim8.newAnimation(g('1-' .. body.num_frames, 1), body.speed, 'pauseAtEnd')
+  	body.animation = anim8.newAnimation(g('1-' .. body.num_frames, 1), body.speed)
   	body.animation:pause()
 
   	cam_x, cam_y = cam.gcam:getVisible()
@@ -85,8 +86,6 @@ function bell.update(dt, game, cam)
 		for key, item in pairs(bell.enable) do
 			-- Count enables
 			num_enable = num_enable + 1
-			-- if key == 1 and item and bell.enable[tools.table_length(bell.enable)] == false then
-			-- end
 		end
 		if num_enable > 1 then
 			-- Search emptys
@@ -96,11 +95,29 @@ function bell.update(dt, game, cam)
 					count_singles = count_singles + 1
 				end
 			end
+			-- Bad. Restart
 			if count_singles >= 2 then
 				for key, item in pairs(bell.enable) do
 					bell.enable[key] = false
 				end
 			end
+			-- Check good
+			local good = true
+			for key, item in pairs(bell.enable) do
+				if bell.enable[key] == false then
+					good = false
+				end
+			end
+			-- Enable animation good
+			if good then
+				bell.animation:resume()
+				sound_1:stop()
+				sound_1:play()
+				for key, item in pairs(bell.enable) do
+					bell.enable[key] = false
+				end
+			end
+			good = true
 			count_singles = 0
 		end
 		num_enable = 0
