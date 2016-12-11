@@ -20,7 +20,10 @@ function game.load()
   	game.world = love.physics.newWorld(0, gravity * world_meter, true) -- Make earth
 
   	-- Bells
-  	bells_enable = false
+  	bells_enable = true
+
+	game.music = love.audio.newSource("assets/audio/music/theme.mp3")
+	game:playMusic()
 end
 
 function game:nextLevel()
@@ -37,6 +40,14 @@ function game:setNewSizeWorld(canvas_width, canvas_height)
 	game.canvas = { x = width / 2, y= 0, width = canvas_width, height = canvas_height }
 	camera.gcam = gamera.new(0, 0, game.window.width, game.window.height)
 	camera.gcam:setWorld(0, 0, game.canvas.width, game.canvas.height)
+end
+
+function game:playMusic()
+	game.music:play()
+end
+
+function game:stopMusic()
+	game.music:stop()
 end
 
 return game
