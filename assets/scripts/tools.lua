@@ -71,4 +71,12 @@ function tools.print_r(t)
     print()
 end
 
+-- Get positions from circle
+function tools.cicle_positions(x, y, radius, angle)
+    local pos_x, pos_y = nil, nil
+    pos_x = x + radius * math.cos(math.rad(angle))
+    pos_y = y + radius * math.sin(math.rad(angle))
+    return pos_x, pos_y
+end
+
 return tools

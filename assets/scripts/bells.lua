@@ -29,40 +29,60 @@ function bell.load(game, cam)
   	bell_3 = tools.clone_table(body)
   	bell_3.x = cam_x + (game.window.width / 4 * 3) - (bell_1.img:getWidth() / body.num_frames / 2)
   	bell_3.y = bell_1.y
+  	bells = {bell_1, bell_2, bell_3}	
 
   	-- Collisions
-  	local collision_size = body.img:getHeight() / 2
-	collisions.positions = {
-		{x=100, y=50},
-		{x=500, y=200}
-	}
+  	collisions.size = 15
+	collisions.positions = {}
+	collisions.num = 15 
+	collisions.correction = 45
 
-	-- Make HC collisions
-	collisions.hc = {}
-	for key, collision in pairs(collisions.positions) do
-		collisions.hc[key] = HC.circle(collision.x, collision.y, collision_size)
+	-- Make positions collisions
+	for i = 1, collisions.num, 1 do
+		local tem_x, tem_y = tools.cicle_positions(0, 0, bell_1.img:getHeight() / 2, 360 / collisions.num * i)
+		collisions.positions[i] = {x=tem_x, y=tem_y}
 	end
 
+	-- Add collisions
+	for key, bell in pairs(bells) do
+		bell.collisions = {}
+		for key, collision in pairs(collisions.positions) do
+			bell.collisions[key] = HC.circle(bell.x + collision.x, collision.y, collisions.size)
+		end
+	end
 end
 
 function bell.update(dt, game, cam)
+	-- Update cam position
   	cam_x, cam_y = cam.gcam:getVisible()
+  	-- Ani bells
 	bell_1.animation:update(dt)
 	bell_2.animation:update(dt)
 	bell_3.animation:update(dt)
+	-- Bells fix pos
   	bell_1.x = cam_x + (game.window.width / 4) - (bell_1.img:getWidth() / body.num_frames / 2)
   	bell_2.x = cam_x + (game.window.width / 4 * 2) - (bell_1.img:getWidth() / body.num_frames / 2)
   	bell_3.x = cam_x + (game.window.width / 4 * 3) - (bell_1.img:getWidth() / body.num_frames / 2)
+  	-- Collisions fix pos
+	for key, bell in pairs(bells) do
+		for key, collision in pairs(collisions.positions) do
+			bell.collisions[key]:moveTo(collisions.positions[key].x + bell.x + (bell.img:getHeight() / 2) + collisions.correction, collisions.positions[key].y + bell.y + (bell.img:getHeight() / 2))
+		end
+	end
 end
 
 function bell.draw()
 	if bells_enable then
-		bell_1.animation:draw(bell_1.img, bell_1.x, bell_1.y)
-		bell_2.animation:draw(bell_2.img, bell_2.x, bell_2.y)
-		bell_3.animation:draw(bell_3.img, bell_3.x, bell_3.y)
+		-- Bells
+		for key, bell in pairs(bells) do
+			bell.animation:draw(bell.img, bell.x, bell.y)
+		end
+		-- Collisions
 		if collision_debug then
-			for key, collision in pairs(collisions.hc) do
-				collision:draw('fill')	
+			for key, bell in pairs(bells) do
+				for key, collision in pairs(collisions.positions) do
+					bell.collisions[key]:draw('fill')	
+				end
 			end
 		end
 	end
