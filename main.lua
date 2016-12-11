@@ -3,14 +3,15 @@ local stages = require 'assets/scripts/stages'
 local controls = require 'assets/scripts/controls'
 local bells = require 'assets/scripts/bells'
 local camera = require 'assets/scripts/camera'
-
+local stress = require 'assets/scripts/stress'
 
 -- LOAD
 function love.load()
 	game.load()
 	camera.load(game)
 	stages.load(game, camera)
-	bells.load(game, camera)
+	stress.load(game, camera)
+	--bells.load(game, camera)
 	controls.load(game)
 end
 
@@ -20,7 +21,8 @@ function love.update(dt)
 	game.world:update(dt)
 	camera.update(game)
 	stages.update(dt, game, camera)
-	bells.update(dt, game, camera)
+	stress.update(dt, game, camera)
+	-- bells.update(dt, game, camera)
 	controls.update(dt, game, camera)
 end
 
@@ -29,7 +31,8 @@ function love.draw()
 	camera.gcam:draw(
 		function(l,t,w,h)
 			stages.draw()
-			bells.draw(game)
+			stress.draw()
+			-- bells.draw(game)
 		end
 	)
 	controls.draw()

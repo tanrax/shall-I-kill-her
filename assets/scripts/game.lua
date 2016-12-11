@@ -24,6 +24,8 @@ function game.load()
 
   	game.music = love.audio.newSource("assets/audio/music/theme.mp3")
   	game:playMusic()
+
+  	game.stress = false
 end
 
 function game:nextLevel()

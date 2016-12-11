@@ -27,7 +27,7 @@ function controls.update(dt, game, camera)
     -- Mouse
     -- move circle to mouse position
     local cam_x, cam_y = camera.gcam:getPosition()
-    local mouse_x, mouse_y = love.mouse.getPosition() 
+    local mouse_x, mouse_y = love.mouse.getPosition()
     controls.mouse:moveTo(cam_x + mouse_x - 640 , mouse_y)
     print('mouse')
     print(love.mouse.getPosition())
