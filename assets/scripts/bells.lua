@@ -92,6 +92,13 @@ function bell.update(dt, game, cam)
 			end
 		end
 	end
+	for key, bell in pairs(bells) do
+		for key, collision in pairs(bell.collisions) do
+    		for shape, delta in pairs(HC.collisions(bell.collisions[key])) do
+				bell.enable[key] = true
+    		end
+		end
+	end
 	-- Logic
 	local num_enable = 0
 	for key, bell in pairs(bells) do
@@ -129,6 +136,7 @@ function bell.update(dt, game, cam)
 				bell.active = true
 				bell.animation:resume()
 				bell.sound_good:play()
+				bell.animation:resume()
 				for key, item in pairs(bell.enable) do
 					bell.enable[key] = false
 				end

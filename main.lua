@@ -19,7 +19,7 @@ end
 
 -- UPDATE
 function love.update(dt)
-	require('assets/scripts/vendor/lovebird').update()
+	--require('assets/scripts/vendor/lovebird').update()
 	game.world:update(dt)
 	game.update(dt)
 	camera.update(game)
