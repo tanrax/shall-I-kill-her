@@ -9,7 +9,7 @@ function game.load()
 	game.window = { width = width , height = height }
 	game.canvas = { x = width / 2, y= 0, width = canvas_width, height = canvas_height }
 	game.level = 1
-	game.end_level = 3
+	game.end_level = 5
 
 	love.window.setMode(game.window.width, game.window.height)
 
@@ -20,7 +20,7 @@ function game.load()
   	game.world = love.physics.newWorld(0, gravity * world_meter, true) -- Make earth
 
   	-- Bells
-  	bells_enable = true
+  	bells_enable = false
 
   	game.music = love.audio.newSource("assets/audio/music/theme.mp3")
   	game:playMusic()
