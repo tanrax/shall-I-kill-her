@@ -20,7 +20,7 @@ function game.load()
   	game.world = love.physics.newWorld(0, gravity * world_meter, true) -- Make earth
 
   	-- Bells
-  	bells_enable = true
+  	bells_enable = false
 
   	game.music = love.audio.newSource("assets/audio/music/theme.mp3")
   	game:playMusic()
