@@ -6,6 +6,8 @@ local camera = require 'assets/scripts/camera'
 local stress = require 'assets/scripts/stress'
 local messages = require 'assets/scripts/messages'
 local start = require 'assets/scripts/start'
+local arrows = require 'assets/scripts/arrows'
+local stage2 = require 'assets/scripts/stage2'
 
 -- LOAD
 function love.load()
@@ -37,7 +39,7 @@ end
 function love.draw()
   camera.gcam:draw(
     function(l,t,w,h)
-      stages.draw()
+      stages.draw(game, camera)
       stress.draw()
       bells.draw(game)
     end
@@ -49,4 +51,6 @@ end
 
 function love.mousepressed(x, y, button, istouch)
   start.mousepressed(game)
+  arrows.mousepressed(x, y, button, istouch)
+  stage2.mousepressed(game, messages, camera)
 end

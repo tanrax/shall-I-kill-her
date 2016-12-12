@@ -31,8 +31,8 @@ function stages.update(dt, game, camera)
 	end
 end
 
-function stages.draw()
-	dynamic_stage.draw()
+function stages.draw(game, camera)
+	dynamic_stage.draw(game, camera)
 end
 
 return stages

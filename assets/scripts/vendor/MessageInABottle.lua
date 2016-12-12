@@ -35,7 +35,7 @@ MessageBottle.DEFAULT_FGALPHA = 1
 MessageBottle.DEFAULT_BGRADIUS = 10 --pixels to draw the rounded corners
 MessageBottle.DEFAULT_BGRADIUSSEGMENTS = 32 --how precisely to draw the circle
 MessageBottle.DEFAULT_BGCOLOR = {r=0,g=0,b=0}
-MessageBottle.DEFAULT_BGALPHA = 0.8
+MessageBottle.DEFAULT_BGALPHA = 0.3
 
 MessageBottle.DEFAULT_EASETIME = 0.5 --seconds to ease
 MessageBottle.DEFAULT_FADETIME = 0.3 --seconds to fade alpha

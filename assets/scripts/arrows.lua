@@ -24,7 +24,7 @@ function arrows.draw()
 end
 
 
-function love.mousepressed(mx, my, button)
+function arrows.mousepressed(mx, my, button)
 	x1,y1,x2,y2,x3,y3,x4,y4 = camera.gcam:getVisibleCorners()
 	wl, wt, ww, wh = camera.gcam:getWorld()
 	if button == 1 then
