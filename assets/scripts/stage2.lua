@@ -9,16 +9,23 @@ function stage2.load(game, camera)
 	image_table = love.graphics.newImage('assets/sprites/table/table.jpg')
 	image_table_hover = love.graphics.newImage('assets/sprites/table/table_hover.jpg')
 	image_table_none = love.graphics.newImage('assets/sprites/table/table_none.jpg')
-	image_cruz = love.graphics.newImage('assets/sprites/table/cruz.png')
-	image_picture = love.graphics.newImage('assets/sprites/table/picture.png')
 	stage2.world = { w = image_table:getWidth(), h= 720}
 	game:setNewSizeWorld(stage2.world.w, stage2.world.h)
 	arrows.load(game, stage2, camera)
 	game.canvas.x = game.window.width / 2
 end
 
+local count_time = 0
 function stage2.update(dt, game)
 	arrows.update(dt)
+	if game.status == 3  then
+		if count_time > 22 then
+			game.status = 4
+  			game.bells_enable = true
+		else
+			count_time = dt + count_time
+		end
+	end
 end
 
 function stage2.draw(game, camera)

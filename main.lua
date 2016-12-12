@@ -8,6 +8,7 @@ local messages = require 'assets/scripts/messages'
 local start = require 'assets/scripts/start'
 local arrows = require 'assets/scripts/arrows'
 local stage2 = require 'assets/scripts/stage2'
+local stage3 = require 'assets/scripts/stage3'
 
 -- LOAD
 function love.load()
@@ -23,7 +24,7 @@ end
 
 -- UPDATE
 function love.update(dt)
-  --require('assets/scripts/vendor/lovebird').update()
+  require('assets/scripts/vendor/lovebird').update()
   game.world:update(dt)
   game.update(dt)
   camera.update(game)
@@ -53,4 +54,5 @@ function love.mousepressed(x, y, button, istouch)
   start.mousepressed(game)
   arrows.mousepressed(x, y, button, istouch)
   stage2.mousepressed(game, messages, camera)
+  stage3.mousepressed(game, messages, camera)
 end

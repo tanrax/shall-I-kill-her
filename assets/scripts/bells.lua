@@ -158,6 +158,9 @@ function bell.update(dt, game, cam)
 				game.bells_enable = false
 			end
 		end
+		if game_over then
+			game.status = game.status + 1
+		end
 	end
 end
 
