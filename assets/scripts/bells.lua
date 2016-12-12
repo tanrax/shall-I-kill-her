@@ -63,100 +63,100 @@ function bell.load(game, cam)
 end
 
 function bell.update(dt, game, cam)
-	-- Update cam position
-  	cam_x, cam_y = cam.gcam:getVisible()
-  	-- Ani bells
-	bell_1.animation:update(dt)
-	bell_2.animation:update(dt)
-	bell_3.animation:update(dt)
-	-- Bells fix pos
-  	bell_1.x = cam_x + (game.window.width / 4) - (bell_1.img:getWidth() / body.num_frames / 2)
-  	bell_2.x = cam_x + (game.window.width / 4 * 2) - (bell_1.img:getWidth() / body.num_frames / 2)
-  	bell_3.x = cam_x + (game.window.width / 4 * 3) - (bell_1.img:getWidth() / body.num_frames / 2)
-  	-- Collisions fix pos
-	for key, bell in pairs(bells) do
-		for key, collision in pairs(collisions.positions) do
-			bell.collisions[key]:moveTo(collisions.positions[key].x + bell.x + (bell.img:getHeight() / 2) + collisions.correction, collisions.positions[key].y + bell.y + (bell.img:getHeight() / 2))
-		end
-	end
-	-- Check collisions
 	if game.bells_enable then
+		-- Update cam position
+	  	cam_x, cam_y = cam.gcam:getVisible()
+	  	-- Ani bells
+		bell_1.animation:update(dt)
+		bell_2.animation:update(dt)
+		bell_3.animation:update(dt)
+		-- Bells fix pos
+	  	bell_1.x = cam_x + (game.window.width / 4) - (bell_1.img:getWidth() / body.num_frames / 2)
+	  	bell_2.x = cam_x + (game.window.width / 4 * 2) - (bell_1.img:getWidth() / body.num_frames / 2)
+	  	bell_3.x = cam_x + (game.window.width / 4 * 3) - (bell_1.img:getWidth() / body.num_frames / 2)
+	  	-- Collisions fix pos
+		for key, bell in pairs(bells) do
+			for key, collision in pairs(collisions.positions) do
+				bell.collisions[key]:moveTo(collisions.positions[key].x + bell.x + (bell.img:getHeight() / 2) + collisions.correction, collisions.positions[key].y + bell.y + (bell.img:getHeight() / 2))
+			end
+		end
+		-- Check collisions
+			for key, bell in pairs(bells) do
+				for key, collision in pairs(bell.collisions) do
+		    		for shape, delta in pairs(HC.collisions(bell.collisions[key])) do
+		    			if bell.sound_loop:isPlaying() == false then
+							bell.sound_loop:play()
+						end
+						bell.enable[key] = true
+		    		end
+				end
+			end
 		for key, bell in pairs(bells) do
 			for key, collision in pairs(bell.collisions) do
 	    		for shape, delta in pairs(HC.collisions(bell.collisions[key])) do
-	    			if bell.sound_loop:isPlaying() == false then
-						bell.sound_loop:play()
-					end
 					bell.enable[key] = true
 	    		end
 			end
 		end
-	end
-	for key, bell in pairs(bells) do
-		for key, collision in pairs(bell.collisions) do
-    		for shape, delta in pairs(HC.collisions(bell.collisions[key])) do
-				bell.enable[key] = true
-    		end
-		end
-	end
-	-- Logic
-	local num_enable = 0
-	for key, bell in pairs(bells) do
-		for key, item in pairs(bell.enable) do
-			-- Count enables
-			num_enable = num_enable + 1
-		end
-		if num_enable > 1 then
-			-- Search emptys
-			local count_singles = 0
+		-- Logic
+		local num_enable = 0
+		for key, bell in pairs(bells) do
 			for key, item in pairs(bell.enable) do
-				if key > 1 and bell.enable[key] and bell.enable[key - 1] == false then
-					count_singles = count_singles + 1
-				end
+				-- Count enables
+				num_enable = num_enable + 1
 			end
-			-- Bad. Restart
-			if count_singles >= 2 then
-				for key, bell in pairs(bells) do
-					bell.sound_loop:stop()
-				end
-				sound_error:play()
+			if num_enable > 1 then
+				-- Search emptys
+				local count_singles = 0
 				for key, item in pairs(bell.enable) do
-					bell.enable[key] = false
+					if key > 1 and bell.enable[key] and bell.enable[key - 1] == false then
+						count_singles = count_singles + 1
+					end
 				end
-			end
-			-- Check good
-			local good = true
-			for key, item in pairs(bell.enable) do
-				if bell.enable[key] == false then
-					good = false
+				-- Bad. Restart
+				if count_singles >= 2 then
+					for key, bell in pairs(bells) do
+						bell.sound_loop:stop()
+					end
+					sound_error:play()
+					for key, item in pairs(bell.enable) do
+						bell.enable[key] = false
+					end
 				end
-			end
-			-- Enable animation good
-			if good then
-				bell.active = true
-				bell.animation:resume()
-				bell.sound_good:play()
-				bell.animation:resume()
+				-- Check good
+				local good = true
 				for key, item in pairs(bell.enable) do
-					bell.enable[key] = false
+					if bell.enable[key] == false then
+						good = false
+					end
 				end
+				-- Enable animation good
+				if good then
+					bell.active = true
+					bell.animation:resume()
+					bell.sound_good:play()
+					bell.animation:resume()
+					for key, item in pairs(bell.enable) do
+						bell.enable[key] = false
+					end
+				end
+				good = true
+				count_singles = 0
 			end
-			good = true
-			count_singles = 0
+			num_enable = 0
 		end
-		num_enable = 0
-	end
-	-- Game over
-	game_over = true
-	for key, bell in pairs(bells) do
-		if not bell.active then
-			game_over = false
+		-- Game over
+		game_over = true
+		for key, bell in pairs(bells) do
+			if not bell.active then
+				game_over = false
+			end
 		end
-	end
-	for key, bell in pairs(bells) do
-		if game_over then
-			bell.animation:pauseAtEnd()
-			game.bells_enable = false
+		for key, bell in pairs(bells) do
+			if game_over then
+				bell.animation:pauseAtEnd()
+				game.bells_enable = false
+			end
 		end
 	end
 end
