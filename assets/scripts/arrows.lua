@@ -19,9 +19,7 @@ function arrows.update(dt, game)
 end
 
 function arrows.draw()
-	if arrows.game.level > 1 then
-		love.graphics.draw(arrows.img_left, arrows.left_x, arrows.left_y)
-	end
+	love.graphics.draw(arrows.img_left, arrows.left_x, arrows.left_y)
 	love.graphics.draw(arrows.img_right, arrows.right_x, arrows.right_y)
 end
 

@@ -46,7 +46,11 @@ function game:nextLevel()
 end
 
 function game:prevLevel()
-	game.level = game.level - 1
+	if game.level > 1 then
+		game.level = game.level - 1
+	else
+		game.level = game.end_level
+	end
 end
 
 function game:setNewSizeWorld(canvas_width, canvas_height)
