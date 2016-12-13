@@ -6,11 +6,23 @@ local stage7 = {}
 local image
 
 function stage7.load(game, camera)
-	image = love.graphics.newImage('assets/sprites/background/fondo_armario.jpg')
+	if game.status == 9 then
+		image = love.graphics.newImage('assets/sprites/background/final bueno_3.jpg')
+		stage7.music = love.audio.newSource("assets/audio/fx/door_win.wav")
+		stage7.music2 = love.audio.newSource("assets/audio/music/our_song_end.mp3")
+	else
+		image = love.graphics.newImage('assets/sprites/background/dead.jpg')
+		stage7.music = love.audio.newSource("assets/audio/fx/door_lose.wav")
+	end
+	game:stopMusic()
 	stage7.world = { w = image:getWidth(), h= 720}
 	game:setNewSizeWorld(stage7.world.w, stage7.world.h)
 	arrows.load(game, stage7, camera)
 	game.canvas.x = game.window.width / 2
+	stage7.music2:play()
+	stage7.music:play()
+
+
 end
 
 function stage7.update(dt, game)

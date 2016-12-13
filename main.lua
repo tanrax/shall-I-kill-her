@@ -9,6 +9,9 @@ local start = require 'assets/scripts/start'
 local arrows = require 'assets/scripts/arrows'
 local stage2 = require 'assets/scripts/stage2'
 local stage3 = require 'assets/scripts/stage3'
+local stage4 = require 'assets/scripts/stage4'
+local stage5 = require 'assets/scripts/stage5'
+local stage6 = require 'assets/scripts/stage6'
 
 -- LOAD
 function love.load()
@@ -55,4 +58,7 @@ function love.mousepressed(x, y, button, istouch)
   arrows.mousepressed(x, y, button, istouch)
   stage2.mousepressed(game, messages, camera)
   stage3.mousepressed(game, messages, camera)
+  stage4.mousepressed(game, messages, camera)
+  stage5.mousepressed(game, messages, camera)
+  stage6.mousepressed(game, messages, camera)
 end

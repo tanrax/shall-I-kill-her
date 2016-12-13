@@ -50,8 +50,8 @@ function stage2.mousepressed(game, messages, camera)
 	if game.status == 2  then
 	  	cam_x, cam_y = camera.gcam:getVisible()
 		if mos_x + cam_x > 527 and mos_x + cam_x < 653 and mos_y - cam_y > 335 and mos_y - cam_y < 423 then
-			game.status = 3
-			messages.new_message('cap1preview', 20)
+			game.status = 5
+			messages.new_message('cap1preview', 10)
 		end
 	end
 end

@@ -9,7 +9,7 @@ function game.load()
 	game.window = { width = width , height = height }
 	game.canvas = { x = width / 2, y= 0, width = canvas_width, height = canvas_height }
 	game.level = 1
-	game.end_level = 6
+	game.end_level = 7
 	game.start_screen = true
 
 	love.window.setMode(game.window.width, game.window.height)
@@ -27,6 +27,7 @@ function game.load()
   	game.music = love.audio.newSource("assets/audio/music/theme_biblia.wav")
 
   	game.stress = false
+  	game.var_end = false
 
 end
 
@@ -34,7 +35,11 @@ function game.update(dt)
 	if game.bells_enable then
 		game:stopMusic()
 	else
-  		game:playMusic()
+		if game.var_end == false then
+  			game:playMusic()
+  		else
+  			game:stopMusic()
+  		end
 	end
 end
 

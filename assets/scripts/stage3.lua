@@ -54,6 +54,8 @@ function stage3.mousepressed(game, messages, camera)
 	  	cam_x, cam_y = camera.gcam:getVisible()
 		if mos_x + cam_x > 709 and mos_x + cam_x < 791 and mos_y - cam_y > 202 and mos_y - cam_y < 354 then
 			game.status = 6
+			print 'game.status'
+			print(game.status)
 			messages.new_message('cap2stage', 15)
 		end
 	end
